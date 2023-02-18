@@ -21,6 +21,7 @@ namespace CountWords
 
             // Выводим результат
             Console.WriteLine(symbols.Count);
+            Console.ReadKey();
         }
     }
 }
