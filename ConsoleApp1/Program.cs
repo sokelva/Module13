@@ -11,6 +11,7 @@ namespace CountWords
     {
         static void Main(string[] args)
         {
+
             // Укажем путь к текстовому файлу из задания "Задание 13.6.2" 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\Text2.txt";
 
