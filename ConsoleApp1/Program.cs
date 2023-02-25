@@ -1,4 +1,9 @@
 ﻿using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace CountWords
 {
@@ -6,21 +11,35 @@ namespace CountWords
     {
         static void Main(string[] args)
         {
-            // Сохраняем предложение в строку
-            var sentence =
-                "Подсчитайте, сколько уникальных символов в этом предложении, используя HashSet<T>, учитывая знаки препинания, но не учитывая пробелы в начале и в конце предложения.";
+            // Укажем путь к текстовому файлу из задания "Задание 13.6.2" 
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\Text2.txt";
 
-            // сохраняем в массив char
-            var characters = sentence.ToCharArray();
+            // Открываем файл и читаем из него весь текст.
+            string sentence = string.Empty;
 
-            var symbols = new HashSet<char>();
+            // Создаем объект класса FileInfo.
+            var fileInfo = new FileInfo(path);
+            using (StreamReader sr = fileInfo.OpenText())
+            {
+                sentence = sr.ReadToEnd().Replace("\n", "");
+            }
 
-            // добавляем во множество. Сохраняются только неповторяющиеся символы
-            foreach (var symbol in characters)
-                symbols.Add(symbol);
+            //Выбираем весь текст, кроме пунктуаци
+            List<string> noPunctuationText = new string(sentence.ToList().Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ').ToList();
 
-            // Выводим результат
-            Console.WriteLine(symbols.Count);
+            //Сформируем новую коллекцию List
+            var words = noPunctuationText.Where(x => !string.IsNullOrEmpty(x))
+                .GroupBy(x => x)
+                .Select(s => new { Word = s.Key, Count = s.Count() })
+                .OrderByDescending(s => s.Count).ToList().Take(10);
+
+            //Смотрим результат
+            foreach (var item in words)
+            {
+                Console.WriteLine($"Слово \"{item.Word}\" в тексте повторяется {item.Count} раз.");
+            }
+            Console.ReadKey();
+            
         }
     }
 }
