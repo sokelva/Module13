@@ -26,25 +26,26 @@ namespace CountWords
                 sentence = sr.ReadToEnd().Replace("\n", "");
             }
 
-            //Объявим коллекции список и связанный список
+            //Объявим коллекции список и связанный список и зполним их
             List<string> listText = new List<string>();
             LinkedList<string> linkText = new LinkedList<string>();//string(sentence.ToList().Where(c => !char.IsPunctuation(c)).ToArray()).Split(' ').ToList();
-
+            listText.Add(sentence);
+            linkText.AddLast(sentence);
 
             // Запустим таймер для listText
             var listTextWatch = Stopwatch.StartNew();
             // Выполним вставку
-            listText.Add(sentence);
+            listText.Add("test");
             // Выведем время вставки
-            Console.WriteLine($"Вставка в список: {listTextWatch.Elapsed.TotalMilliseconds}  мс");
+            Console.WriteLine($"Вставка в список List<string>: {listTextWatch.Elapsed.TotalMilliseconds}  мс");
 
 
             // Запустим таймер для linkText
             var linkTextWatch = Stopwatch.StartNew();
             // Выполним вставку
-            linkText.AddLast(sentence);
+            linkText.AddLast("test");
             // Выведем время вставки
-            Console.WriteLine($"Вставка в связанный список LinkedList<T>: {linkTextWatch.Elapsed.TotalMilliseconds}  мс");
+            Console.WriteLine($"Вставка в список LinkedList<T>: {linkTextWatch.Elapsed.TotalMilliseconds}  мс");
 
             //Смотрим результат
             Console.ReadKey();
