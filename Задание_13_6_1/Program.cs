@@ -47,6 +47,7 @@ namespace CountWords
             // Выведем время вставки
             Console.WriteLine($"Вставка в список LinkedList<T>: {linkTextWatch.Elapsed.TotalMilliseconds}  мс");
 
+
             //Смотрим результат
             Console.ReadKey();
         }
